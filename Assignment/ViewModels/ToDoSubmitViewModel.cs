@@ -1,6 +1,8 @@
 ﻿using Assignment.Commands;
+using Assignment.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,13 +15,14 @@ namespace Assignment.ViewModels
     {
         private string _itemName { get; set; }
         private int _selectedPriority { get; set; }
+        public ObservableCollection<ToDoItem> Items { get; set; } = new ObservableCollection<ToDoItem>();
         public string ItemName
         {
             get => _itemName;
             set
             {
                 _itemName = value;
-                OnPropertyChanged("ItemName");
+                OnPropertyChanged(nameof(ItemName));
             }
         }
         public int SelectedPriority
@@ -28,7 +31,7 @@ namespace Assignment.ViewModels
             set
             {
                 _selectedPriority = value;
-                OnPropertyChanged("SelectedPriority");
+                OnPropertyChanged(nameof(SelectedPriority));
             }
         }
 
@@ -39,6 +42,9 @@ namespace Assignment.ViewModels
         public ToDoSubmitViewModel() 
         {
             Initialize();
+            Items.Add(new ToDoItem { ItemName = "Test 1", Priority = 1 });
+            Items.Add(new ToDoItem { ItemName = "Test 2", Priority = 2 });
+            Items.Add(new ToDoItem { ItemName = "Test 3", Priority = 3 });
         }
 
         private void Initialize()
@@ -47,9 +53,17 @@ namespace Assignment.ViewModels
             Priorities = new List<int> { 1, 2, 3};
         }
 
-        private void SubmitItem(object obj)
+        private void SubmitItem(object _)
         {
-            throw new NotImplementedException();
+            var item = new ToDoItem
+            {
+                ItemName = this.ItemName,
+                Priority = this.SelectedPriority
+            };
+            // Logika je da je 1 - najveci priorite, 3 - najmanji prioritet.
+            int index = Items.Where(i => i.Priority < item.Priority).Count();
+
+            Items.Insert(index, item);
         }
     }
 }

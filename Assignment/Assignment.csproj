@@ -80,6 +80,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Commands\RellayCommand.cs" />
     <Compile Include="Models\ThreadWorker.cs" />
+    <Compile Include="Models\ToDoItem.cs" />
     <Compile Include="ViewModels\LoadersViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ToDoListViewModel.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Views\LoadersView.xaml.cs">
       <DependentUpon>LoadersView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PriorityToColorConverter.cs" />
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
