@@ -14,3 +14,8 @@ LoadersViewModel je centralno mesto za logiku Loaders funkcionalnosti. Drži tri
 Samim tim, ThreadWorker je čist model koji samo drži podatke, a ViewModel je taj koji zna kada i kako da ih menja. Zavisnost ide samo u jednom smeru.
 
 `TotalProgress` se ne čuva kao vrednost već se uvek računa kao prosek aktivnih thread-ova. Ako su svi cancelovani, vraća 0.
+
+
+### Tests
+
+Da bih pokrenuo testove, bilo je potrebno ažurirati `MSTest.TestAdapter` paket sa verzije `2.2.10` na `4.2.3`.
