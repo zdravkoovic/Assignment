@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Input;
 
 namespace Assignment.ViewModels
 {
@@ -28,6 +29,8 @@ namespace Assignment.ViewModels
             }
         }
 
+        public ICommand CancelCommand { get; }
+
         public LoadersViewModel()
         {
             Workers = new ObservableCollection<ThreadWorker>
@@ -41,6 +44,14 @@ namespace Assignment.ViewModels
             _timer.Elapsed += OnTimerElapsed;
             _timer.AutoReset = true;
             _timer.Start();
+
+            CancelCommand = new RelayCommand(CancelWorker);
+        }
+
+        private void CancelWorker(object obj)
+        {
+            var worker = obj as ThreadWorker;
+            worker?.Cancel();
         }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)

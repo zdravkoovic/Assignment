@@ -3,10 +3,101 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Assignment.Views" xmlns:local1="clr-namespace:Assignment.ViewModels"
+             xmlns:local="clr-namespace:Assignment.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <!-- Thread Workers -->
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Workers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,4" Padding="12" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="6">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="80"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                                   Text="Thread progress"
+                                   VerticalAlignment="Center"
+                                   FontSize="13"/>
+
+                                <ProgressBar Grid.Column="1"
+                                     Minimum="0"
+                                     Maximum="100"
+                                     Value="{Binding Progress, Mode=OneWay}"
+                                     Height="16"
+                                     Margin="8,0"
+                                     VerticalAlignment="Center"/>
+
+                                <TextBlock Grid.Column="2"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"
+                                   Foreground="#555">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0:F0}%">
+                                            <Binding Path="Progress"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+
+                                <Button Grid.Column="3"
+                                Content="Cancel"
+                                IsEnabled="{Binding IsActive}"
+                                Command="{Binding DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}"
+                                Padding="8,4"
+                                Margin="4,0"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Total Progress -->
+        <Border Grid.Row="1" Margin="0,12,0,0" Padding="12" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="6">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="Total progress"
+                           FontWeight="Bold"
+                           FontSize="13"
+                           VerticalAlignment="Center"/>
+
+                <ProgressBar Grid.Column="1"
+                             Minimum="0"
+                             Maximum="100"
+                             Value="{Binding TotalProgress, Mode=OneWay}"
+                             Height="16"
+                             Margin="8,0"
+                             VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Column="2"
+                           VerticalAlignment="Center"
+                           FontSize="12"
+                           Foreground="#555">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0:F0}%">
+                            <Binding Path="TotalProgress"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
