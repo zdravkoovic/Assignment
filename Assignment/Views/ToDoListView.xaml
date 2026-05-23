@@ -20,53 +20,61 @@
             </Grid.RowDefinitions>
 
             <!--Submit form-->
-            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1"  Grid.Row="0" Grid.Column="1">
+            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Grid.Row="0" Grid.Column="1">
                 <ContentControl x:Name="ToDoSubmitViewModel"/>
             </Border>
 
             <ListBox Grid.Column="0" Grid.Row="0"
- ItemsSource="{Binding Path=ToDoSubmitViewModel.Items, Mode=OneWay}"
- BorderThickness="0"
- Background="Transparent">
+                     ItemsSource="{Binding Path=ToDoSubmitViewModel.Items, Mode=OneWay}"
+                     BorderThickness="0"
+                     Background="Transparent">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                         <Setter Property="Padding" Value="0"/>
                         <Setter Property="Margin" Value="0,2"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
                     </Style>
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border Background="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}"
-            CornerRadius="6"
-            Padding="12,8"
-            Margin="4,2">
+                                CornerRadius="6"
+                                Padding="12,8"
+                                Margin="4,2">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0"
-                       Text="{Binding ItemName}"
-                       FontSize="13"
-                       FontWeight="Medium"
-                       Foreground="#1a1a1a"
-                       VerticalAlignment="Center"/>
+                                           Text="{Binding ItemName}"
+                                           FontSize="13"
+                                           FontWeight="Normal"
+                                           Foreground="#1a1a1a"
+                                           VerticalAlignment="Center"/>
                                 <Border Grid.Column="1"
-                    Background="#22000000"
-                    CornerRadius="4"
-                    Padding="6,2">
+                                        Background="#22000000"
+                                        CornerRadius="4"
+                                        Padding="6,2">
                                     <TextBlock Text="{Binding Priority}"
-                           FontSize="11"
-                           FontWeight="Bold"
-                           Foreground="#1a1a1a"/>
+                                               FontSize="11"
+                                               FontWeight="Bold"
+                                               Foreground="#1a1a1a"/>
                                 </Border>
                             </Grid>
                         </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
+
         </Grid>
     </ContentControl>
 </UserControl>
