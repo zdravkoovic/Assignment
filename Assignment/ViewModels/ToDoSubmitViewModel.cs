@@ -42,15 +42,15 @@ namespace Assignment.ViewModels
         public ToDoSubmitViewModel() 
         {
             Initialize();
-            Items.Add(new ToDoItem { ItemName = "Test 1", Priority = 1 });
-            Items.Add(new ToDoItem { ItemName = "Test 2", Priority = 2 });
-            Items.Add(new ToDoItem { ItemName = "Test 3", Priority = 3 });
         }
 
         private void Initialize()
         {
-            SubmitCommand = new RelayCommand(SubmitItem);
+            SubmitCommand = new RelayCommand(SubmitItem, CanSubmit);
             Priorities = new List<int> { 1, 2, 3};
+            Items.Add(new ToDoItem { ItemName = "Test 1", Priority = 1 });
+            Items.Add(new ToDoItem { ItemName = "Test 2", Priority = 2 });
+            Items.Add(new ToDoItem { ItemName = "Test 3", Priority = 3 });
         }
 
         private void SubmitItem(object _)
@@ -64,6 +64,11 @@ namespace Assignment.ViewModels
             int index = Items.Where(i => i.Priority <= item.Priority).Count();
 
             Items.Insert(index, item);
+        }
+
+        private bool CanSubmit(object _)
+        {
+            return !string.IsNullOrWhiteSpace(ItemName) && SelectedPriority != 0;
         }
     }
 }
