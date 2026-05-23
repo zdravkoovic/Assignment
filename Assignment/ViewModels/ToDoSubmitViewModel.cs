@@ -48,9 +48,6 @@ namespace Assignment.ViewModels
         {
             SubmitCommand = new RelayCommand(SubmitItem, CanSubmit);
             Priorities = new List<int> { 1, 2, 3};
-            Items.Add(new ToDoItem { ItemName = "Test 1", Priority = 1 });
-            Items.Add(new ToDoItem { ItemName = "Test 2", Priority = 2 });
-            Items.Add(new ToDoItem { ItemName = "Test 3", Priority = 3 });
         }
 
         private void SubmitItem(object _)
