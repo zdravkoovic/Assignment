@@ -61,7 +61,7 @@ namespace Assignment.ViewModels
                 Priority = this.SelectedPriority
             };
             // Logika je da je 1 - najveci priorite, 3 - najmanji prioritet.
-            int index = Items.Where(i => i.Priority < item.Priority).Count();
+            int index = Items.Where(i => i.Priority <= item.Priority).Count();
 
             Items.Insert(index, item);
         }
