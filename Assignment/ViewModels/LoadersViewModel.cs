@@ -19,10 +19,10 @@ namespace Assignment.ViewModels
         {
             get
             {
-                var activeWorkers = Workers.Where(w => !w.IsActive).ToList();
+                var activeWorkers = Workers.Where(w => w.IsActive).ToList();
 
                 if (!activeWorkers.Any())
-                    return 0;
+                    return 0.0;
 
                 return activeWorkers.Average(w => w.Progress);
             }

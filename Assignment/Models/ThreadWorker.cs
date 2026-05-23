@@ -13,7 +13,7 @@ namespace Assignment.Models
         private static readonly Random _random = new Random();
 
         public int Duration { get; set; }
-        public int Elapsed { get; set; }
+        public double Elapsed { get; set; }
 
         public bool IsActive { get; set; }
 
