@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Assignment.Models
 {
@@ -23,6 +25,7 @@ namespace Assignment.Models
                 _elapsed = value;
                 OnPropertyChanged(nameof(Elapsed));
                 OnPropertyChanged(nameof(Progress));
+                Application.Current.Dispatcher.Invoke(CommandManager.InvalidateRequerySuggested);
             }
         }
 

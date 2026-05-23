@@ -45,13 +45,21 @@ namespace Assignment.ViewModels
             _timer.AutoReset = true;
             _timer.Start();
 
-            CancelCommand = new RelayCommand(CancelWorker);
+            CancelCommand = new RelayCommand(CancelWorker, CanCancel);
         }
 
         private void CancelWorker(object obj)
         {
             var worker = obj as ThreadWorker;
             worker?.Cancel();
+        }
+
+        private bool CanCancel(object obj)
+        {
+            var worker = obj as ThreadWorker;
+            if(worker == null)
+                return false;
+            return worker.IsActive && worker.Progress < 100.0;
         }
 
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
