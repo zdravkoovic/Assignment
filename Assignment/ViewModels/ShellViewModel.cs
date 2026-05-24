@@ -10,6 +10,8 @@ namespace Assignment.ViewModels
     {
         public ICommand LoadersCommand { get; set; }
         public ICommand ToDoListCommand { get; set; }
+
+        private readonly ToDoListViewModel _toDoListViewModel = new ToDoListViewModel();
         public ShellViewModel() 
         {
             Initialize();
@@ -28,7 +30,7 @@ namespace Assignment.ViewModels
 
         public void ActivateToDoList(object obj)
         {
-            ActiveItem = new ToDoListViewModel();
+            ActiveItem = _toDoListViewModel;
         }
     }
 }
