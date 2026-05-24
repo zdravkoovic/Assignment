@@ -13,56 +13,90 @@
         </Grid.RowDefinitions>
 
         <!-- Thread Workers -->
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Workers}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="0,4" Padding="12" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="6">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="120"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="80"/>
-                                </Grid.ColumnDefinitions>
+        <ItemsControl Grid.Row="0" ItemsSource="{Binding Workers}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,3" Padding="8" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="6">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="80"/>
+                            </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0"
+                            <TextBlock Grid.Column="0"
                                    Text="Thread progress"
                                    VerticalAlignment="Center"
-                                   FontSize="13"/>
+                                   FontSize="12"/>
 
-                                <ProgressBar Grid.Column="1"
+                            <ProgressBar Grid.Column="1"
                                      Minimum="0"
                                      Maximum="100"
                                      Value="{Binding Progress, Mode=OneWay}"
-                                     Height="16"
+                                     Height="12"
                                      Margin="8,0"
                                      VerticalAlignment="Center"/>
 
-                                <TextBlock Grid.Column="2"
+                            <TextBlock Grid.Column="2"
                                    VerticalAlignment="Center"
                                    FontSize="12"
                                    Foreground="#555">
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0:F0}%">
-                                            <Binding Path="Progress"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0:F0}%">
+                                        <Binding Path="Progress"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
 
-                                <Button Grid.Column="3"
-                                Content="Cancel"
-                                IsEnabled="{Binding IsActive}"
-                                Command="{Binding DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                CommandParameter="{Binding}"
-                                Padding="8,4"
-                                Margin="4,0"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+                            <Button Grid.Column="3"
+                                    Content="Cancel"
+                                    IsEnabled="{Binding IsActive}"
+                                    Command="{Binding DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                    CommandParameter="{Binding}"
+                                    Padding="6,3"
+                                    Margin="4,0"
+                                    FontSize="11"
+                                    FontWeight="SemiBold"
+                                    Cursor="Hand">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                                                        <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsEnabled" Value="False">
+                                                            <Setter Property="Background" Value="#CCCCCC"/>
+                                                            <Setter Property="Foreground" Value="#999999"/>
+                                                            <Setter Property="Cursor" Value="Arrow"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#444444"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsPressed" Value="True">
+                                                            <Setter Property="Background" Value="#1A1A1A"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Background" Value="#2D2D2D"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <!-- Total Progress -->
         <Border Grid.Row="1" Margin="0,12,0,0" Padding="12" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="6">
