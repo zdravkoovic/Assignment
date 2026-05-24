@@ -57,10 +57,18 @@ namespace Assignment.ViewModels
                 ItemName = this.ItemName,
                 Priority = this.SelectedPriority
             };
-            // Logika je da je 1 - najveci priorite, 3 - najmanji prioritet.
+            
             int index = Items.Where(i => i.Priority <= item.Priority).Count();
 
             Items.Insert(index, item);
+
+            ResetFormFiledsAfterSubmit();
+        }
+
+        private void ResetFormFiledsAfterSubmit()
+        {
+            ItemName = string.Empty;
+            SelectedPriority = 0;
         }
 
         private bool CanSubmit(object _)
