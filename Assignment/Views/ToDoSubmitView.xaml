@@ -4,14 +4,104 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Assignment.Views"
-             mc:Ignorable="d" >
-    <Grid>
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="FormLabel" TargetType="Label">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#888888"/>
+            <Setter Property="Padding" Value="0,0,0,4"/>
+            <Setter Property="Margin" Value="0,12,0,0"/>
+        </Style>
+
+        <Style x:Key="FormTextBox" TargetType="TextBox">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2D2D2D"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="4,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#2D2D2D"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FormComboBox" TargetType="ComboBox">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2D2D2D"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Padding" Value="4,6"/>
+        </Style>
+
+        <Style x:Key="SubmitButton" TargetType="Button">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,20,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" Value="#CCCCCC"/>
+                                <Setter Property="Foreground" Value="#999999"/>
+                                <Setter Property="Cursor" Value="Arrow"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#444444"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#1A1A1A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="24,16">
         <StackPanel Orientation="Vertical">
-            <Label Content="Name"></Label>
-            <TextBox Text="{Binding Path=ItemName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <Label Content="Priority"></Label>
-            <ComboBox ItemsSource="{Binding Priorities}" SelectedValue="{Binding Path=SelectedPriority}"/>
-            <Button Content="Submit" Margin="10" Command="{Binding SubmitCommand}"></Button>
+
+            <Label Content="NAME" Style="{StaticResource FormLabel}"/>
+            <TextBox Style="{StaticResource FormTextBox}"
+                     Text="{Binding Path=ItemName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Label Content="PRIORITY" Style="{StaticResource FormLabel}"/>
+            <ComboBox Style="{StaticResource FormComboBox}"
+                      ItemsSource="{Binding Priorities}"
+                      SelectedValue="{Binding Path=SelectedPriority}"/>
+
+            <Button Content="SUBMIT"
+                    Style="{StaticResource SubmitButton}"
+                    Command="{Binding SubmitCommand}"/>
+
         </StackPanel>
     </Grid>
 </UserControl>

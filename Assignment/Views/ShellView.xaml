@@ -4,20 +4,91 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Assignment.Views" 
-             mc:Ignorable="d" >
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="NavButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#888888"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F5F5F5"/>
+                                <Setter Property="Foreground" Value="#2D2D2D"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#EEEEEE"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"></ColumnDefinition>
-            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="250"></RowDefinition>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="250"/>
         </Grid.RowDefinitions>
 
-        <Button Grid.Column="0" Grid.Row="0" Content="Loaders" Margin="5" Command="{Binding LoadersCommand}"></Button>
-        <Button Grid.Column="1" Grid.Row="0" Content="To-Do List" Margin="5" Command="{Binding ToDoListCommand}"></Button>
+        <!-- Loaders dugme -->
+        <Button Grid.Column="0" Grid.Row="0"
+                Content="LOADERS"
+                Command="{Binding LoadersCommand}">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource NavButton}">
+                    <Setter Property="Foreground" Value="#888888"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoadersActive}" Value="True">
+                            <Setter Property="Foreground" Value="#2D2D2D"/>
+                            <Setter Property="BorderBrush" Value="#2D2D2D"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
-        <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ActiveItem"/>
+        <!-- To-Do List dugme -->
+        <Button Grid.Column="1" Grid.Row="0"
+                Content="TO-DO LIST"
+                Command="{Binding ToDoListCommand}">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource NavButton}">
+                    <Setter Property="Foreground" Value="#888888"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoadersActive}" Value="False">
+                            <Setter Property="Foreground" Value="#2D2D2D"/>
+                            <Setter Property="BorderBrush" Value="#2D2D2D"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <!-- Separator -->
+        <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#E0E0E0"/>
+
+        <!-- Sadržaj -->
+        <ContentControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ActiveItem"/>
     </Grid>
 </UserControl>

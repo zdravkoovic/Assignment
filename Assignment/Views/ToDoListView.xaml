@@ -20,7 +20,11 @@
             </Grid.RowDefinitions>
 
             <!--Submit form-->
-            <Border Background="GhostWhite" BorderBrush="Gainsboro" BorderThickness="1" Grid.Row="0" Grid.Column="1">
+            <Border Background="White" 
+                    BorderBrush="#E0E0E0" 
+                    BorderThickness="1" 
+                    CornerRadius="6"
+                    Grid.Row="0" Grid.Column="1">
                 <ContentControl x:Name="ToDoSubmitViewModel"/>
             </Border>
 
