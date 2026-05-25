@@ -5,15 +5,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Assignment.ViewModels
 {
     public class LoadersViewModel : ViewModelBase
     {
-        private readonly Timer _timer;
         public ObservableCollection<ThreadWorker> Workers { get; }
 
         public double TotalProgress
@@ -33,19 +34,33 @@ namespace Assignment.ViewModels
 
         public LoadersViewModel()
         {
-            Workers = new ObservableCollection<ThreadWorker>
-            {
-                new ThreadWorker(),
-                new ThreadWorker(),
-                new ThreadWorker()
-            };
+            Workers = new ObservableCollection<ThreadWorker> { new ThreadWorker(), new ThreadWorker(), new ThreadWorker() };
 
-            _timer = new Timer(1000);
-            _timer.Elapsed += OnTimerElapsed;
-            _timer.AutoReset = true;
-            _timer.Start();
+            foreach (var w in Workers)
+            {
+                RunWorker(w); 
+            }
 
             CancelCommand = new RelayCommand(CancelWorker, CanCancel);
+        }
+
+        private void RunWorker(ThreadWorker worker)
+        {
+            var thread = new Thread(() =>
+            {
+                while (worker.Elapsed < worker.Duration)
+                {
+                    worker.Cts.Token.WaitHandle.WaitOne(1000);
+                    if (worker.Cts.Token.IsCancellationRequested) break;
+                    worker.Elapsed++;
+                    OnPropertyChanged(nameof(TotalProgress));
+
+                }
+                OnPropertyChanged(nameof(TotalProgress));
+            });
+
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         private void CancelWorker(object obj)
@@ -60,19 +75,6 @@ namespace Assignment.ViewModels
             if(worker == null)
                 return false;
             return worker.IsActive && worker.Progress < 100.0;
-        }
-
-        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            foreach(var worker in Workers.Where(w => w.IsActive))
-            {
-                if(worker.Elapsed < worker.Duration)
-                {
-                    worker.Elapsed++;
-                }
-            }
-
-            OnPropertyChanged(nameof(TotalProgress));
         }
     }
 }

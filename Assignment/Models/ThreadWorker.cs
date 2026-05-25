@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -15,6 +16,8 @@ namespace Assignment.Models
         private static readonly Random _random = new Random();
         private double _elapsed;
         private bool _isActive;
+
+        public CancellationTokenSource Cts { get; } = new CancellationTokenSource();
 
         public int Duration { get; set; }
         public double Elapsed
@@ -51,6 +54,7 @@ namespace Assignment.Models
         public void Cancel()
         {
             IsActive = false;
+            Cts.Cancel();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
