@@ -34,4 +34,4 @@ jobs:
       run: msbuild $env:Solution_Name /p:Configuration=Release
       
     - name: Run unit tests
-      run: vstest.console.exe $env:Test_Project_Path\bin\Release\Assignment.Tests.dll
+      run: vstest.console.exe Assignment.Tests\bin\Release\Assignment.Tests.dll
