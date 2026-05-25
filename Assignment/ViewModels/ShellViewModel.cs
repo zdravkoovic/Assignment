@@ -12,6 +12,7 @@ namespace Assignment.ViewModels
         public ICommand ToDoListCommand { get; set; }
 
         private readonly ToDoListViewModel _toDoListViewModel = new ToDoListViewModel();
+        private LoadersViewModel _loadersViewModel;
         public ShellViewModel() 
         {
             Initialize();
@@ -25,7 +26,9 @@ namespace Assignment.ViewModels
 
         public void ActivateLoadersView(object obj)
         {
-            ActiveItem = new LoadersViewModel();
+            if (_loadersViewModel == null || _loadersViewModel.TotalProgress == 100 || _loadersViewModel.TotalProgress == 0) _loadersViewModel = new LoadersViewModel();
+            ActiveItem = _loadersViewModel;
+            IsLoadersActive = true;
         }
 
         public void ActivateToDoList(object obj)
