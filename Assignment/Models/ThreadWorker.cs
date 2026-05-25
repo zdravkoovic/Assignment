@@ -28,7 +28,7 @@ namespace Assignment.Models
                 _elapsed = value;
                 OnPropertyChanged(nameof(Elapsed));
                 OnPropertyChanged(nameof(Progress));
-                Application.Current.Dispatcher.Invoke(CommandManager.InvalidateRequerySuggested);
+                Application.Current?.Dispatcher.Invoke(CommandManager.InvalidateRequerySuggested);
             }
         }
 
