@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assignment.Strategies;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Assignment.ViewModels
 
         private void Initialize()
         {
-            ToDoSubmitViewModel = new ToDoSubmitViewModel();
+            ToDoSubmitViewModel = new ToDoSubmitViewModel(new LinearSortStrategy());
         }
     }
 }

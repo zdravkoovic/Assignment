@@ -81,6 +81,8 @@
     <Compile Include="Commands\RellayCommand.cs" />
     <Compile Include="Models\ThreadWorker.cs" />
     <Compile Include="Models\ToDoItem.cs" />
+    <Compile Include="Strategies\ISortStrategy.cs" />
+    <Compile Include="Strategies\LinearSortStrategy.cs" />
     <Compile Include="ViewModels\LoadersViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\ToDoListViewModel.cs" />

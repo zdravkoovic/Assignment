@@ -1,5 +1,6 @@
 ﻿using Assignment.Commands;
 using Assignment.Models;
+using Assignment.Strategies;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +16,9 @@ namespace Assignment.ViewModels
     {
         private string _itemName { get; set; }
         private int _selectedPriority { get; set; }
+        private ISortStrategy _sortStrategy { get; set; }
         public ObservableCollection<ToDoItem> Items { get; set; } = new ObservableCollection<ToDoItem>();
+        
         public string ItemName
         {
             get => _itemName;
@@ -39,9 +42,10 @@ namespace Assignment.ViewModels
 
         public ICommand SubmitCommand { get; private set; }
 
-        public ToDoSubmitViewModel() 
+        public ToDoSubmitViewModel(ISortStrategy sortStrategy)
         {
             Initialize();
+            _sortStrategy = sortStrategy;
         }
 
         private void Initialize()
@@ -49,26 +53,23 @@ namespace Assignment.ViewModels
             SubmitCommand = new RelayCommand(SubmitItem, CanSubmit);
             Priorities = new List<int> { 1, 2, 3};
         }
+        private void ResetFormFiledsAfterSubmit()
+        {
+            ItemName = string.Empty;
+            SelectedPriority = 0;
+        }
 
         private void SubmitItem(object _)
         {
             var item = new ToDoItem
             {
-                ItemName = this.ItemName,
-                Priority = this.SelectedPriority
+                ItemName = ItemName,
+                Priority = SelectedPriority
             };
-            
-            int index = Items.Where(i => i.Priority <= item.Priority).Count();
 
-            Items.Insert(index, item);
+            _sortStrategy.Insert(Items, item);
 
             ResetFormFiledsAfterSubmit();
-        }
-
-        private void ResetFormFiledsAfterSubmit()
-        {
-            ItemName = string.Empty;
-            SelectedPriority = 0;
         }
 
         private bool CanSubmit(object _)
