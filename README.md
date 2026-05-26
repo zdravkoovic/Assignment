@@ -38,11 +38,12 @@ The skeleton project did not contain a Model layer. A `Model` folder was added w
 - `Progress` — computed property, calculated from `Elapsed / Duration`
 - `CancellationTokenSource` — holds the token for stopping the thread
 - `IsActive` — signals the UI whether the thread is active; the `Cancel()` method sets it to `false` and calls `Cts.Cancel()`
+
 **`ToDoItem`** — represents a single ToDo list item with a name and priority.
  
 ---
 
- 
+
 ### Loaders — Multithreading
  
 Three background threads are started upon initialization of `LoadersViewModel`. Each thread independently manages its own progress:
@@ -59,7 +60,7 @@ The Cancel button is automatically disabled via `CommandManager.InvalidateRequer
  
 ---
 
- 
+
 ### ToDo List — Strategy Pattern
  
 An `ISortStrategy` interface was added to abstract the sorting algorithm for easy replacement in the future:
@@ -80,13 +81,26 @@ new ToDoSubmitViewModel(new BinaryInsertStrategy());
 | 3 | Lowest | Green |
  
 ---
- 
+
+
+### Dependency Injection
+
+.NET 4.8 has no built-in DI mechanism, so `Microsoft.Extensions.DependencyInjection` NuGet package was added. Integrated through Caliburn.Micro `Bootstrapper.cs`:
+
+- `ShellViewModel`, `ToDoSubmitViewModel`, `ToDoListViewModel`, `ISortStrategy` → `Singleton`
+- `LoadersViewModel` → `Transient` with a `Func<LoadersViewModel>` factory for creating a new instance on demand
+
+---
+
+
 ### Validation
  
 - **Confirm button** — active only when form conditions are met: `ItemName != null` and `SelectedPriority != 0`
 - **Cancel button** — active only for threads that are alive and whose progress has not reached 100%
+
 ---
  
+
 ## Architecture
  
 The project follows the MVVM pattern. Threads are started in `LoadersViewModel` because they represent execution logic, achieving a one-way dependency — `LoadersViewModel` depends on `ThreadWorker`.
@@ -111,6 +125,7 @@ Assignment/
  
 ---
  
+
 ## Tests
  
 The `Assignment.Tests` project uses the MSTest framework. `MSTest.TestAdapter` upgraded from version `2.2.10` to `4.2.3` for compatibility.
@@ -123,11 +138,13 @@ The `Assignment.Tests` project uses the MSTest framework. `MSTest.TestAdapter` u
  
 ---
 
+
 ## CI
  
 A GitHub Actions workflow runs on every push to `master` and can be triggered manually from the Actions tab. The workflow executes a build and runs all tests. A build artifact is available for download from the latest successful workflow run in the Actions tab.
  
 ---
+ 
  
 ## Running the Application
  
