@@ -22,10 +22,13 @@ namespace Assignment.ViewModels
             }
         }
 
-        private readonly ToDoListViewModel _toDoListViewModel = new ToDoListViewModel();
+        private readonly ToDoListViewModel _toDoListViewModel;
         private LoadersViewModel _loadersViewModel;
-        public ShellViewModel() 
+        private readonly Func<LoadersViewModel> _factory;
+        public ShellViewModel(ToDoListViewModel toDoListViewModel, Func<LoadersViewModel> factory) 
         {
+            _factory = factory;
+            _toDoListViewModel = toDoListViewModel;
             Initialize();
         }
 
@@ -37,7 +40,7 @@ namespace Assignment.ViewModels
 
         public void ActivateLoadersView(object obj)
         {
-            if (_loadersViewModel == null || _loadersViewModel.TotalProgress == 100 || _loadersViewModel.TotalProgress == 0) _loadersViewModel = new LoadersViewModel();
+            if (_loadersViewModel == null || _loadersViewModel.TotalProgress == 100 || _loadersViewModel.TotalProgress == 0) _loadersViewModel = _factory();
             ActiveItem = _loadersViewModel;
             IsLoadersActive = true;
         }

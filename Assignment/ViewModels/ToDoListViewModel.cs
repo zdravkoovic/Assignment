@@ -11,14 +11,14 @@ namespace Assignment.ViewModels
     {
         public ToDoSubmitViewModel ToDoSubmitViewModel { get; set; }
 
-        public ToDoListViewModel()
+        public ToDoListViewModel(ToDoSubmitViewModel toDoSubmitViewModel)
         {
+            ToDoSubmitViewModel = toDoSubmitViewModel;
             Initialize();
         }
 
         private void Initialize()
         {
-            ToDoSubmitViewModel = new ToDoSubmitViewModel(new LinearSortStrategy());
         }
     }
 }

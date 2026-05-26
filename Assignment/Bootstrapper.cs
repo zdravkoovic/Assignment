@@ -4,11 +4,14 @@ using System.Windows;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using Assignment.Strategies;
 
 namespace Assignment
 {
     public class Bootstrapper : BootstrapperBase
     {
+        private ServiceProvider _provider;
         public Bootstrapper()
         {
             Initialize();
@@ -18,6 +21,44 @@ namespace Assignment
         {
             await DisplayRootViewForAsync<ShellViewModel>();
             Application.Current.MainWindow.Title = "TBP Software";
+        }
+
+        protected override void Configure()
+        {
+            base.Configure();
+
+            var services = new ServiceCollection();
+
+            // Caliburn core services
+            services.AddSingleton<IWindowManager, WindowManager>();
+            services.AddSingleton<IEventAggregator, EventAggregator>();
+
+            services.AddSingleton<ISortStrategy, LinearSortStrategy>();
+
+            services.AddTransient<ShellViewModel>();
+            services.AddTransient<ToDoSubmitViewModel>();
+            services.AddTransient<ToDoListViewModel>();
+            services.AddTransient<LoadersViewModel>();
+            services.AddSingleton<Func<LoadersViewModel>>(sp =>
+            {
+                return () => sp.GetRequiredService<LoadersViewModel>();
+            });
+
+            _provider = services.BuildServiceProvider();
+        }
+
+        protected override object GetInstance(Type service, string key)
+        {
+            return _provider.GetRequiredService(service);
+        }
+
+        protected override IEnumerable<object> GetAllInstances(Type service)
+        {
+            return _provider.GetServices(service);
+        }
+
+        protected override void BuildUp(object instance)
+        {
         }
     }
 }
