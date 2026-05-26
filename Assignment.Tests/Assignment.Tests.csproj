@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="Loaders\ThreadWorkerTests.cs" />
     <Compile Include="Loaders\LoadersViewModelTests.cs" />
+    <Compile Include="ToDo\LinearSortStrategyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
